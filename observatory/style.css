@@ -1,0 +1,209 @@
+/* Cozy-Scary Romantic Cottagecore-XP */
+:root{
+  --cozy-bg: #f4efe6;
+  --cozy-panel: #f0ebe3;
+  --cozy-shadow: rgba(0,0,0,0.12);
+
+  --ink: #2b2b2b;
+  --ink-soft: #3a3a3a;
+
+  --accent-deep: #5a4b7a;
+  --accent-glow: #a38cc4;
+
+  --strange-hint: #d7cce9;
+
+  --font: "Chewy", cursive;
+}
+
+*{box-sizing:border-box; font-family:var(--font);}
+
+body{
+  background: radial-gradient(circle at 40% 20%, #e8e0d6, #d9d1c7 40%, #c8bfb5 80%, #b4aba2 100%);
+  height:100vh;
+  margin:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  font-family: "Chewy", cursive;
+
+
+  /* subtle grain texture */
+  background-image:
+    radial-gradient(rgba(255,255,255,0.15) 1px, transparent 1px),
+    radial-gradient(rgba(0,0,0,0.05) 1px, transparent 1px);
+  background-size: 3px 3px, 5px 5px;
+}
+
+/* Window becomes haunted antique cabinet */
+.xp-window{
+  width:1024px;
+  background:var(--cozy-bg);
+  border:3px solid #b6a9a1;
+  box-shadow:0 0 20px rgba(0,0,0,0.3), inset 0 0 25px rgba(0,0,0,0.12);
+  display:flex;
+  flex-direction:column;
+  border-radius:6px;
+  backdrop-filter:blur(1px);
+}
+
+/* Titlebar becomes candlelit parchment strip */
+.titlebar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:linear-gradient(#c8bfd6, #b6aacd);
+  color:#231b2e;
+  padding:6px 8px;
+  height:38px;
+  border-bottom:2px solid #998ca7;
+  box-shadow:inset 0 0 8px rgba(0,0,0,0.15);
+}
+
+.title{
+  font-weight:700;
+  font-size:15px;
+  letter-spacing:0.4px;
+  text-shadow:0 1px 0 rgba(255,255,255,0.6);
+}
+
+/* Soft waxy buttons */
+.title-buttons{display:flex; gap:6px;}
+.title-buttons .btn{
+  background:#ece1fd;
+  border:1px solid #9b8aba;
+  width:28px;height:22px;
+  cursor:pointer;
+  box-shadow:inset 0 0 5px rgba(0,0,0,0.15);
+}
+.title-buttons .btn.close{
+  background:#c47a7a;
+  color:white;
+}
+
+/* Inside layout */
+.content{
+  display:flex;
+  padding:12px;
+  gap:12px;
+}
+
+/* Panels become antique instrument drawers */
+.panel{
+  background:var(--cozy-panel);
+  border:1.5px solid #c9c2b8;
+  padding:12px;
+  border-radius:4px;
+  box-shadow:
+    inset 0 1px 3px rgba(255,255,255,0.4),
+    inset 0 -1px 3px rgba(0,0,0,0.08),
+    0 2px 5px rgba(0,0,0,0.12);
+}
+.panel h3{
+  margin:0 0 8px 0;
+  font-size:14px;
+  font-weight:700;
+  color:var(--accent-deep);
+  letter-spacing:0.5px;
+}
+
+/* Waveform panel gets eerie glow */
+.wave-wrap{
+  border:1px solid #bdb3c8;
+  background:#fffaf5;
+  margin:8px 0;
+  padding:6px;
+  box-shadow:inset 0 0 10px rgba(0,0,0,0.1);
+}
+#waveCanvas{
+  display:block;
+  width:100%;
+  height:80px;
+  background:#fffaf5;
+}
+
+/* Physics canvas gets fog vibe */
+#physicsCanvas{
+  background:linear-gradient(#f2eee8,#eae5df);
+  border:1px solid #b1a79d;
+  display:block;
+  width:100%;
+  box-shadow:inset 0 0 20px rgba(0,0,0,0.15);
+}
+
+/* Status bar = dim lantern glow */
+.statusbar{
+  height:28px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:0 10px;
+  background:linear-gradient(#e7e0d7,#dcd4cb);
+  border-top:2px solid #c4b8ad;
+  font-size:13px;
+  color:#473f39;
+  box-shadow:inset 0 0 8px rgba(0,0,0,0.08);
+}
+
+/* Controls keep original layout but with softer tones */
+button{
+  background:#eae2d8;
+  border:1px solid #b3a79d;
+  padding:5px 8px;
+  cursor:pointer;
+  box-shadow:inset 0 0 4px rgba(0,0,0,0.1);
+}
+button:hover{
+  background:#f0e7dd;
+}
+
+/* Select + input styling */
+input, select{
+  background:#faf5ee;
+  border:1px solid #d0c7bb;
+  padding:2px 4px;
+  color:#3b2f2f;
+  border-radius:2px;
+}
+
+#notes-panel {
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  width: 260px;
+  background: #f9f9f9;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  font-family: serif;
+  transform: translateY(-10px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s ease, transform .25s ease;
+}
+
+#notes-panel.open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+#notes-header {
+  background: #e1e1e1;
+  padding: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  border-bottom: 1px solid #aaa;
+}
+
+#notes-content {
+  padding: 10px;
+  font-size: 14px;
+}
+
+#notes-toggle {
+  margin: 20px;
+  padding: 8px 12px;
+  font-family: serif;
+  cursor: pointer;
+}
