@@ -1,0 +1,181 @@
+:root{
+  --outer-a: #251261;
+  --outer-b: #100433;
+  --panel-top: #6b56d3;
+  --panel-bottom: #281a6a;
+  --panel-border: rgba(0,0,0,0.8);
+  --accent: rgba(255,255,255,0.06);
+  --glass: rgba(255,255,255,0.03);
+  --text: #e9e6ff;
+}
+
+/* page fill + subtle radial gradient */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  font-family: "Pixelify Sans", sans-serif;
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:
+    radial-gradient(1200px 600px at 20% 20%, rgba(255,255,255,0.03), transparent 10%),
+    radial-gradient(900px 400px at 80% 80%, rgba(255,255,255,0.02), transparent 10%),
+    radial-gradient(circle, var(--outer-a), var(--outer-b));
+  overflow:hidden;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  transition: filter 0.08s linear;
+}
+
+/* scene container to allow camera-like transform */
+#scene{
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  pointer-events:none; /* prevents accidental drag on overlay */
+}
+
+/* main panel */
+#window{
+  width: min(760px, 86vw);
+  max-width: 900px;
+  min-width: 380px;
+  background: linear-gradient(180deg, var(--panel-top) 0%, var(--panel-bottom) 100%);
+  border: 3px solid var(--panel-border);
+  border-radius: 6px;
+  padding: 28px;
+  box-shadow:
+    0 16px 40px rgba(0,0,0,0.6),
+    inset 0 2px 0 rgba(255,255,255,0.02);
+  position:relative;
+  pointer-events:auto;
+  transform-origin:center;
+}
+
+/* titlebar */
+.titlebar{font-weight:700;color:var(--text);letter-spacing:0.02em;margin-bottom:12px;font-size:14px}
+.title{ text-transform:lowercase; }
+
+/* label + input */
+.content{color:var(--text)}
+.label{display:block;margin-bottom:8px;opacity:0.9;font-size:12px}
+.input-wrap{position:relative}
+#search{
+  width:100%;
+  padding:12px 12px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12));
+  border:1px solid rgba(255,255,255,0.03);
+  color:var(--text);
+  outline:none;
+  border-radius:6px;
+  font-size:15px;
+  caret-color: #fff;
+  position:relative;
+  z-index:1;
+  -webkit-appearance:none;
+}
+
+/* faux preview sits on top of input to show animated letters */
+#preview{
+  position:absolute;
+  left:12px;
+  top:50%;
+  transform:translateY(-50%);
+  height:calc(100% - 4px);
+  display:flex;
+  align-items:center;
+  gap:0;
+  pointer-events:none;
+  color:transparent; /* the real input shows caret; preview paints letters separately */
+  z-index:2;
+}
+
+/* each letter */
+.preview-letter{
+  font-size:15px;
+  color:var(--text);
+  opacity:0;
+  display:inline-block;
+  transform: translateY(6px);
+  will-change: transform, opacity;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.6);
+}
+
+/* results list */
+#results{
+  list-style:none;
+  padding:0;
+  margin:14px 0 0 0;
+  max-height:240px;
+  overflow:auto;
+}
+#results li{
+  margin-top:8px;
+  padding:10px 12px;
+  border-radius:6px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.08));
+  border:1px solid rgba(255,255,255,0.02);
+  color:var(--text);
+  cursor:pointer;
+  transform-origin:left center;
+  transform: translateX(-8px) scale(0.995);
+  opacity:0;
+  pointer-events:auto;
+}
+
+/* per-letter wave animation using CSS only,
+   JS sets --delay for each letter to create the sin motion and snappy wave */
+@keyframes letterIn {
+  0% { opacity:0; transform: translateY(12px); }
+  60% { opacity:1; transform: translateY(-6px); }
+  100% { opacity:1; transform: translateY(0); }
+}
+
+/* sin bob for a subtle continuous motion applied after reveal */
+@keyframes bob {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+}
+
+/* when JS adds .revealed to a letter, it will animate in */
+.preview-letter.revealed{
+  animation:
+    letterIn 420ms cubic-bezier(.2,.9,.3,1) var(--delay) forwards,
+    bob 2200ms ease-in-out calc(var(--delay) + 0.42s) infinite;
+}
+
+/* results reveal animation */
+#results li.revealed{
+  animation: resultIn 360ms cubic-bezier(.2,.9,.3,1) forwards;
+}
+@keyframes resultIn {
+  from { opacity:0; transform: translateX(-8px) scale(0.995); }
+  to   { opacity:1; transform: translateX(0) scale(1); }
+}
+
+/* static overlay */
+.static-overlay{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:0.08; /* subtle — tweak as needed */
+  pointer-events:none;
+  mix-blend-mode:screen;
+  z-index:20;
+  filter: grayscale(0.6) contrast(1.1);
+}
+
+/* small responsive tweaks */
+@media (max-width:520px){
+  #window{ padding:18px; border-radius:4px; width:92vw }
+  .titlebar{font-size:13px}
+  #search{font-size:14px}
+}

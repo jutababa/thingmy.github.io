@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Project Navigator</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+  <div id="scene">
+    <div id="window">
+      <div class="titlebar">
+        <span class="title">project navigator</span>
+      </div>
+
+      <div class="content">
+        <label for="search" class="label">search projects</label>
+        <div class="input-wrap">
+          <input type="text" id="search" autocomplete="off" spellcheck="false" />
+          <!-- faux preview sits on top of the input to animate letters -->
+          <div id="preview" aria-hidden="true"></div>
+        </div>
+
+        <ul id="results" role="listbox" aria-live="polite"></ul>
+      </div>
+    </div>
+
+    <!-- Slightly transparent static overlay (replace path with static.gif if you have one) -->
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
