@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Resampler + Audio Physics — Strange Cottage Console</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Chewy&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="xp-window" id="mainWindow">
+    <div class="titlebar">
+      <div class="title">resampler + audio</div>
+      <div class="title-buttons">
+        <button class="btn">_</button>
+        <button class="btn">☐</button>
+        <button class="btn close">✕</button>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="left-col">
+        <section class="panel">
+          <h3>Sample Source</h3>
+          <input type="file" id="fileInput" accept="audio/*">
+          <div class="wave-wrap">
+            <canvas id="waveCanvas" width="600" height="80"></canvas>
+          </div>
+          <div class="trim-controls">
+            <label>Start (s) <input id="trimStart" type="number" step="0.01" min="0" value="0"></label>
+            <label>End (s) <input id="trimEnd" type="number" step="0.01" min="0" value="0"></label>
+            <button id="applyTrim">Apply Trim</button>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h3>Instrument / Resampler</h3>
+          <label>Root note (MIDI) <input id="rootNote" type="number" min="0" max="127" value="60"></label>
+          <label>Playback decay (s) <input id="decay" type="range" min="0.05" max="3" step="0.01" value="0.5"></label>
+          <div class="adsr">
+            <label>A <input id="envA" type="range" min="0" max="1" step="0.01" value="0.01"></label>
+            <label>D <input id="envD" type="range" min="0" max="3" step="0.01" value="0.1"></label>
+            <label>S <input id="envS" type="range" min="0" max="1" step="0.01" value="0.8"></label>
+            <label>R <input id="envR" type="range" min="0.01" max="3" step="0.01" value="0.3"></label>
+          </div>
+          <div class="instr-actions">
+            <button id="testNote">Play Test Note (C4)</button>
+            <button id="savePreset">Save Preset</button>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h3>Global</h3>
+          <label>Master Volume <input id="masterVol" type="range" min="0" max="1" step="0.01" value="0.9"></label>
+          <label>Granularity (stutter) <input id="grain" type="range" min="1" max="32" step="1" value="1"></label>
+          <div class="play-controls">
+            <button id="startAudioCtx">Start Audio</button>
+          </div>
+        </section>
+      </div>
+
+      <div class="right-col">
+        <section class="panel">
+          <h3>audio thing</h3>
+          <div class="physics-controls">
+            <label>Gravity <input id="gravity" type="range" min="-2" max="2" step="0.05" value="0.5"></label>
+            <label>Friction <input id="friction" type="range" min="0" max="1" step="0.01" value="0.01"></label>
+            <label>Spawn size <input id="size" type="range" min="4" max="40" step="1" value="12"></label>
+            <label>Collision to trigger?
+              <select id="triggerMode">
+                <option value="collide">particle collisions</option>
+                <option value="wall">wall hits</option>
+                <option value="bounce">any bounce</option>
+              </select>
+            </label>
+            <div class="physics-buttons">
+              <button id="clearParticles">Clear</button>
+              <button id="spawnRandom">Spawn 10</button>
+            </div>
+          </div>
+          <canvas id="physicsCanvas" width="700" height="420"></canvas>
+          <div class="hint">they make noise yes</div>
+        </section>
+      </div>
+    </div>
+
+    <div class="statusbar">
+      <span id="status">No sample loaded</span>
+      <span class="right" id="fps">FPS: 0</span>
+    </div>
+  </div>
+
+
+  <script src="script.js"></script>
+</body>
+</html>
