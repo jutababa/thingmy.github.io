@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>bonk-like grapple prototype</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="ui">
+    <div class="title">bonk test — grapple prototype</div>
+    <div class="controls">
+      <button id="mode-classic" class="mode active">1 classic</button>
+      <button id="mode-arrows" class="mode">2 arrows</button>
+      <div class="hint">move: A D • jump: W / Space • click: grapple / shoot (arrows)</div>
+    </div>
+  </div>
+
+  <canvas id="canvas"></canvas>
+
+  <!-- matter.js from CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
