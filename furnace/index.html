@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Heat + Temperature — Furnace Demo</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <header>
+      <h1>heat + temperature — furnace demo</h1>
+      <p class="subtitle">explore particles, heat flow, insulation, and phase change</p>
+    </header>
+
+    <main>
+      <section class="left">
+        <div class="controls card">
+          <h2>controls</h2>
+          <label>heater power: <span id="heaterPowerLabel">50</span> W</label>
+          <input id="heaterPower" type="range" min="0" max="200" value="50" />
+
+          <label>ambient temperature: <span id="ambientLabel">20</span> °C</label>
+          <input id="ambientTemp" type="range" min="-20" max="200" value="20" />
+
+          <label>material conductivity: <span id="conductivityLabel">0.5</span></label>
+          <input id="conductivity" type="range" min="0.05" max="1.5" step="0.01" value="0.5" />
+
+          <label>insulation (reduces heat loss): <span id="insulationLabel">0.5</span></label>
+          <input id="insulation" type="range" min="0" max="1" step="0.01" value="0.5" />
+
+          <label>convection (air movement):</label>
+          <select id="convectionMode">
+            <option value="off">off</option>
+            <option value="gentle">gentle</option>
+            <option value="strong">strong</option>
+          </select>
+
+          <div class="buttons">
+            <button id="toggleHeater">toggle heater</button>
+            <button id="resetBtn">reset</button>
+          </div>
+        </div>
+
+        <div class="stats card">
+          <h2>readouts</h2>
+          <p>avg temp: <strong id="avgTemp">20</strong> °C</p>
+          <p>total thermal energy: <strong id="energyKJ">0</strong> kJ</p>
+          <p>phase (approx): <strong id="phase">solid</strong></p>
+          <p>conservation note: energy added by heater vs lost to ambient shown.</p>
+        </div>
+
+        <div class="explain card">
+          <h2>i need to read this</h2>
+          <div id="explanations">
+            <!-- Filled by JS -->
+          </div>
+        </div>
+      </section>
+
+      <section class="right">
+        <div class="canvasWrap card">
+          <canvas id="simCanvas" width="800" height="520"></canvas>
+          <div class="overlay">
+            <div>heater: <span id="heaterStatus">on</span></div>
+            <div>click heater rectangle to toggle</div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <small>supermassiev black heeoeleel</small>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
